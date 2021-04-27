@@ -13,40 +13,40 @@ class FechaHora:
         if (m == 1 or m == 3 or m == 5 or m == 7 or m== 8 or m == 10 or m == 12) and (d < 1 or d > 31):
             print('Error: {} tiene 31 dias.'.format(self.__meses[m-1]))
             print('Reloj creado con parametros por defecto')
-        elif (m == 4 or m == 6 or m == 9 or m == 11) and (d < 1 or d > 30):
+        if (m == 4 or m == 6 or m == 9 or m == 11) and (d < 1 or d > 30):
             print('Error: {} tiene 30 dias.'.format(self.__meses[m-1]))
             print('Reloj creado con parametros por defecto')
-        elif m == 2:
+        if m == 2:
             esBisiesto = self.__detectarBisiesto(a)
             if esBisiesto and (d < 1 or d > 29):
                 print('Error: Febrero bisiesto tiene hasta 29 dias')
                 print('Reloj creado con parametros por defecto')
-            elif not esBisiesto and (d < 1 or d > 28):
+            if not esBisiesto and (d < 1 or d > 28):
                 print('Error: Febrero NO bisiesto tiene hasta 28 dias')
                 print('Reloj creado con parametros por defecto')
-        elif m < 1 or m > 12:
+        if m < 1 or m > 12:
             print('Error: el mes debe estar entre 1 y 12.')
             print('Reloj creado con parametros por defecto')
-        elif a < 0 or a > 9999:
+        if a < 0 or a > 9999:
             print('Error: el anio debe estar entre 0 y 9999.')
             print('Reloj creado con parametros por defecto')
-        elif h < 0 or h >= 24:
+        if h < 0 or h >= 24:
             print('Error: las horas deben estar entre 0 y 23.')
             print('Reloj creado con parametros por defecto')
-        elif mi < 0 or mi >= 60:
+        if mi < 0 or mi >= 60:
             print('Error: los minutos deben estar entre 0 y 59.')
             print('Reloj creado con parametros por defecto')
-        elif s < 0  or s >= 60:
+        if s < 0  or s >= 60:
             print('Error: los segundos deben estar entre 0 y 59.')
             print('Reloj creado con parametros por defecto')
-        else:
+        else:        
             self.__dia = d
             self.__mes = m
             self.__anno = a
             self.__hora = h
             self.__min = mi
             self.__seg = s
-            print('Reloj agregado correctamente!')
+        print('Reloj agregado correctamente!')
 
     def Mostrar(self):
         #Formato de fecha: dd/mm/aaaa
@@ -116,25 +116,23 @@ class FechaHora:
             d += diaAdd
             h = h - diaAdd * 24
 
-        if (m == 1 or m == 3 or m == 5 or m == 7 or m== 8 or m == 10 or m == 12) and d >= 32:
-            m += 1
-            d -= 31
-        if (m == 4 or m == 6 or m == 9 or m == 11) and d >= 31:
-            m += 1
-            d -= 30
-        if m == 2:
-            esBisiesto = self.__detectarBisiesto(a)
-            if (esBisiesto and d >= 30):
-                m += 1
-                d -= 29
-            elif (not esBisiesto and d >=29):
-                m += 1
-                d -= 28
-        if m > 12:
-            a += 1
-            m = 1
-
+        mAdd = True   
+        while mAdd:
+            if (m == 1 or m == 3 or m == 5 or m == 7 or m== 8 or m == 10 or m == 12) and d > 31:
+                m = m+1  
+                d = d - 31  
+            if (m == 4 or m == 6 or m == 9 or m == 11) and d > 30:
+                m = m+1
+                d = d - 30
+            if m == 2 and self.__detectarBisiesto(a) and d > 29:
+                m = m+1   
+                d = d - 29
+            if m == 2 and not self.__detectarBisiesto(a) and d > 28:
+                m = m+1
+                d = d - 28
+            if m > 12:
+                a += 1
+                m = m - 12
+            if (d <= 28) or (d == 31 and m == 1):
+                mAdd = False
         return [d,m,a,h,mi,s]
-
-
-
