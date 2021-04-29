@@ -10,36 +10,47 @@ class FechaHora:
 
     #Metodos
     def __init__(self,d=1,m=1,a=2020,h=0,mi=0,s=0):
+        error = False
         if (m == 1 or m == 3 or m == 5 or m == 7 or m== 8 or m == 10 or m == 12) and (d < 1 or d > 31):
             print('Error: {} tiene 31 dias.'.format(self.__meses[m-1]))
             print('Reloj creado con parametros por defecto')
-        elif (m == 4 or m == 6 or m == 9 or m == 11) and (d < 1 or d > 30):
+            error = True
+        if (m == 4 or m == 6 or m == 9 or m == 11) and (d < 1 or d > 30):
             print('Error: {} tiene 30 dias.'.format(self.__meses[m-1]))
             print('Reloj creado con parametros por defecto')
-        elif m == 2:
+            error = True
+        if m == 2:
             esBisiesto = self.__detectarBisiesto(a)
             if esBisiesto and (d < 1 or d > 29):
                 print('Error: Febrero bisiesto tiene hasta 29 dias')
                 print('Reloj creado con parametros por defecto')
+                error = True
             if not esBisiesto and (d < 1 or d > 28):
                 print('Error: Febrero NO bisiesto tiene hasta 28 dias')
                 print('Reloj creado con parametros por defecto')
-        elif m < 1 or m > 12:
+                error = True
+        if m < 1 or m > 12:
             print('Error: el mes debe estar entre 1 y 12.')
             print('Reloj creado con parametros por defecto')
-        elif a < 0 or a > 9999:
+            error = True
+        if a < 0 or a > 9999:
             print('Error: el anio debe estar entre 0 y 9999.')
             print('Reloj creado con parametros por defecto')
-        elif h < 0 or h >= 24:
+            error = True
+        if h < 0 or h >= 24:
             print('Error: las horas deben estar entre 0 y 23.')
             print('Reloj creado con parametros por defecto')
-        elif mi < 0 or mi >= 60:
+            error = True
+        if mi < 0 or mi >= 60:
             print('Error: los minutos deben estar entre 0 y 59.')
             print('Reloj creado con parametros por defecto')
-        elif s < 0  or s >= 60:
+            error = True
+        if s < 0  or s >= 60:
             print('Error: los segundos deben estar entre 0 y 59.')
             print('Reloj creado con parametros por defecto')
-        else:        
+            error = True
+        
+        if error == False:        
             self.__dia = d
             self.__mes = m
             self.__anno = a
